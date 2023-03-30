@@ -37,3 +37,16 @@ class ApplicationView:
         self.exit_button = customtkinter.CTkButton(self.app, text="Kilépés", command=self.exit_callback)
         self.save_button.pack(pady=10)
         self.exit_button.pack()
+
+    def get_input_data(self):
+        input_data = {}
+        for field in self.fields:
+            field_name = field["field_name"]
+            user_input = self.input_vars[field_name].get()
+            input_data[field_name] = user_input
+            self.input_vars[field_name].set("")
+        return input_data
+    
+    def show_input_data(self, data):
+        self.input_data_list.append(data)
+        print(self.input_data_list)
