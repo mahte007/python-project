@@ -2,26 +2,29 @@ import sqlite3
 import yaml
 
 
-yml_file = "config.yml"
+try:
+
+    yml_file = "../Config/conig.yml"
+    with open(yml_file, "r") as f:
+        data = yaml.safe_load(f)
+
+    fields = data['fields']
+
+    jsonFilePath = data['output_file']
+    dataBaseFilePath = data['data_file']
+    tableName = data['table_name']
 
 
-with open(yml_file, "r") as f:
-    data = yaml.safe_load(f)
+    connection = sqlite3.connect(dataBaseFilePath)
+    cursor = connection.cursor()
 
-fields = data['fields']
+    cursor.execute(f"SELECT * FROM {tableName}")
+    rows = cursor.fetchall()
 
-jsonFilePath = data['output_file']
-dataBaseFilePath = data['data_file']
-tableName = data['table_name']
+    for row in rows:
+        print(row)
 
+    connection.close()
 
-connection = sqlite3.connect(dataBaseFilePath)
-cursor = connection.cursor()
-
-cursor.execute(f"SELECT * FROM {tableName}")
-rows = cursor.fetchall()
-
-for row in rows:
-    print(row)
-
-connection.close()
+except:
+    print("File not found!")
