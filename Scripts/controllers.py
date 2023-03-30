@@ -27,8 +27,11 @@ class ApplicationController:
         print(self.input_data_list)
 
     def export_data(self):
-        model.save_json(self.json_file_path, self.input_data_list)
-        model.save_data_to_db(self.database_file_path, self.table_name, self.fields, self.input_data_list)
+        try:
+            model.save_json(self.json_file_path, self.input_data_list)
+            model.save_data_to_db(self.database_file_path, self.table_name, self.fields, self.input_data_list)
+        except:
+            print("Path not found! Check your path in the yaml file or create the folder it needs.")
 
     def exit_application(self):
         self.export_data()

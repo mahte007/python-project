@@ -1,5 +1,8 @@
 from controllers import ApplicationController
 
 if __name__ == '__main__':
-    app = ApplicationController("config.yml")
-    app.run()
+    try:
+        app = ApplicationController("config.yml")
+        app.run()
+    except:
+        print("Error! File not found!")
